@@ -1,0 +1,102 @@
+[client]
+#password  = your_password
+port       = 3306
+socket     = /var/lib/mysql/mysql.sock
+default-character-set = utf8
+character-set-server  = utf8
+collation-server      = utf8_general_ci
+
+[mysqld]
+user      = mysql
+port      = 3306
+socket    = /data/mysql/3306/mysql.sock
+basedir   = /usr/local/webserver/mysql
+datadir   = /data/mysql/3306/data
+log-error = /data/mysql/3306/mysql_error.log
+pid-file  = /data/mysql/3306/mysql.pid
+
+
+######### character sets
+default-character-set  = utf8
+character-set-server   = utf8
+collation-server       = utf8_general_ci
+default-storage-engine = innodb
+######### engine and access interfaces
+skip-networking
+skip-locking
+skip-bdb
+
+######### general
+interactive_timeout = 120
+wait_timeout = 120
+connect_timeout = 10
+back_log = 600
+open_files_limit = 10240
+table_cache = 4096
+max_connections = 5000
+max_connect_errors = 6000
+external-locking = FALSE
+max_allowed_packet = 32M
+
+# below are per-connection and per-sub-query
+join_buffer_size     = 4M
+read_buffer_size     = 4M
+sort_buffer_size     = 8M
+read_rnd_buffer_size = 8M
+read_rnd_buffer_size = 16M
+
+thread_cache_size = 300
+thread_concurrency = 8
+
+query_cache_size = 512M
+query_cache_limit = 2M
+query_cache_min_res_unit = 2k
+
+thread_stack = 192K
+transaction_isolation = READ-COMMITTED
+
+# this is the on-disk max size
+tmp_table_size = 128M
+tmpdir = /tmp
+
+# You can log slow queries to the mysql log directory to help isolate performance problems
+slow_query_log
+long_query_time = 1
+log_long_format
+
+######### myisam
+myisam_sort_buffer_size = 128M
+myisam_max_sort_file_size = 10G
+myisam_repair_threads = 1
+myisam_recover
+# innodb still requires the myisam engine for mysql's internal metadata table
+key_buffer_size      = 512M
+
+######### innodb options
+innodb_data_home_dir = /data/mysql/3306/data
+innodb_data_file_path = ibdata1:2000M;ibdata2:10M:autoextend
+innodb_additional_mem_pool_size = 16M
+innodb_buffer_pool_size = 512M
+innodb_file_io_threads = 4
+innodb_thread_concurrency = 8
+innodb_flush_log_at_trx_commit = 2
+innodb_log_buffer_size = 16M
+innodb_log_file_size = 128M
+innodb_log_files_in_group = 3
+innodb_max_dirty_pages_pct = 90
+innodb_lock_wait_timeout = 120
+innodb_file_per_table = 0
+
+
+[mysqldump]
+quick
+max_allowed_packet = 32M
+
+[myisamchk]
+key_buffer_size = 256M
+sort_buffer_size = 256M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+interactive-timeout
